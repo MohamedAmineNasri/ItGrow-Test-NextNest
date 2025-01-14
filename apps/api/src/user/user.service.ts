@@ -12,16 +12,17 @@ export class UserService {
     return await this.prisma.user.create({
       data: {
         password: hashedPassword,
-        ...user
+        ...user,
       }
     })
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: {
         email,
       },
     });
   }
 }
+    

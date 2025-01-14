@@ -8,7 +8,7 @@ const SubmitButton = ({children}:PropsWithChildren) => {
   const {pending} = useFormStatus()
 
   return (
-    <Button type='submit' aria-disabled={pending} className='w-full mt-2' >
+    <Button type='submit' aria-disabled={pending} className='w-full mt-2'  variant="outline">
       {pending? 'Submitting...': children}
     </Button>
   )
