@@ -101,8 +101,8 @@ const UserDropdown = () => {
                     </a>
                   </li>
                   <li className="font-medium">
-                    <a
-                      href="#"
+                    <Link
+                      href="/dashboard"
                       className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700"
                     >
                       <div className="mr-3">
@@ -127,8 +127,8 @@ const UserDropdown = () => {
                           ></path>
                         </svg>
                       </div>
-                      Settings
-                    </a>
+                      Dashboard
+                    </Link>
                   </li>
                   <hr className="dark:border-gray-700" />
                   <li className="font-medium">
