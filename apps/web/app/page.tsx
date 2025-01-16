@@ -1,6 +1,7 @@
 import { getSession } from '@/lib/session';
 import Header from '../components/ui/Header'
 import Footer from '../components/ui/footer'
+import Testimonial from '@/components/ui/testimonial';
 
 export default async function Home() {
   const session = await getSession()
@@ -10,6 +11,7 @@ export default async function Home() {
     <Header />
     <div className="flex-grow">
       {/* Main content goes here */}
+      <Testimonial />
     </div>
     <Footer />
   </div>
