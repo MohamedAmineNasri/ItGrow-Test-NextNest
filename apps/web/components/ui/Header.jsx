@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "./button";
+import UserDropdown from "./UserDropdown";
 import Link from "next/link";
 
 const Header = () => {
@@ -56,7 +57,7 @@ const Header = () => {
 
 
         <div className="sm:flex hidden">
-          <Button
+          {/* <Button
             asChild
             className={"flex items-center justify-center px-[20px] py-0 mx-auto w-[94px] h-[40px] bg-[#6138BD] border border-[#6138BD] rounded-[10px] hover:bg-[#6138BD] hover:border-[#6138BD]"}
           >
@@ -66,7 +67,8 @@ const Header = () => {
             >
               Sign in
             </Link>
-          </Button>
+          </Button> */}
+          <UserDropdown />
         </div>
 
         <div className="sm:hidden flex justify-center mt-4">
