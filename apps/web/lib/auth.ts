@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { BACKEND_URL } from "./constants";
 import { FormSate, SignInFormSchema, SignupFormSchema } from "./type";
-import { createSession } from "./session";
+import { createSession, updateTokens } from "./session";
 
 export async function signUp(
   state: FormSate,
@@ -95,6 +95,11 @@ export const refreshToken = async (oldRefreshToken: string) => {
     if (!response.ok) {
       throw new Error("Failed to refresh token");
     }
-    const {accessToken, refreshToken} = await response.json()
-  } catch (error) {}
+    const { accessToken, refreshToken } = await response.json();
+    await updateTokens({ accessToken, refreshToken });
+    return accessToken;
+  } catch (err) {
+    console.log("Refresh Token failed", err);
+    return null;
+  }
 };
