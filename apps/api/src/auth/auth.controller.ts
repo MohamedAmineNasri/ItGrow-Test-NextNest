@@ -1,4 +1,11 @@
-import { Controller, Post, Body, UseGuards, Request, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth/local-auth.guard';
@@ -16,13 +23,14 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   login(@Request() req) {
-    return this.authService.login(req.user.id, req.user.name)
+    return this.authService.login(req.user.id, req.user.name);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('protected')
-    getAll(@Request() req){
-      return `Now you can access this protected API, this is your user ID: ${req.user.id}`
-    }
-  
+  getAll(@Request() req) {
+    return {
+      message: `Now you can access this protected API, this is your user ID: ${req.user.id}`,
+    };
+  }
 }

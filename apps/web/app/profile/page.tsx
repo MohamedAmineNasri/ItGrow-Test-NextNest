@@ -1,15 +1,20 @@
 import Header from "@/components/ui/Header";
 import PagesFooter from "@/components/ui/PagesFooter";
+import { getProfile } from "@/lib/actions";
 import React from "react";
 
-const page = () => {
+const ProfilePage = async () => {
+  const res = await getProfile();
   return (
     <div>
       <Header />
-      <div className="min-h-screen">page</div>
+      <div className="min-h-screen">
+        Profile Page
+        <p>{JSON.stringify(res)}</p>
+      </div>
       <PagesFooter />
     </div>
   );
 };
 
-export default page;
+export default ProfilePage;
