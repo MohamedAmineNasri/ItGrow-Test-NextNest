@@ -73,7 +73,7 @@ export async function signIn(
         name: result.name,
       },
       accessToken: result.accessToken,
-      refreshToken: result.refreshToken
+      refreshToken: result.refreshToken,
     });
     redirect("/");
   } else {
@@ -83,3 +83,18 @@ export async function signIn(
     };
   }
 }
+
+export const refreshToken = async (oldRefreshToken: string) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/auth/refresh`, {
+      method: "POST",
+      body: JSON.stringify({
+        refresh: oldRefreshToken,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to refresh token");
+    }
+    const {accessToken, refreshToken} = await response.json()
+  } catch (error) {}
+};
