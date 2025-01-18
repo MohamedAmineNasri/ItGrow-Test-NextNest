@@ -3,10 +3,10 @@ import Image from "next/image";
 
 const BlogSection = () => {
   return (
-    <div className="flex flex-col justify-center items-center py-10 px-6 sm:px-10 md:px-20 lg:px-40 xl:px-[260px] w-full">
-      <div className="flex flex-col items-center p-0 gap-12 max-w-[1140px] w-full">
+    <div className="flex flex-col justify-center items-center  px-6    w-full    ">
+      <div className="flex flex-col items-center  gap-32  max-w-[1140px] w-full">
         {/* Header Section */}
-        <div className="flex flex-col items-center p-0 gap-2 w-full">
+        <div className="flex flex-col items-center w-full">
           <h2 className="font-playfair font-bold text-[24px] sm:text-[28px] md:text-[36px] leading-[1.2] text-[#11204D] text-center">
             From The Blog
           </h2>
@@ -16,14 +16,15 @@ const BlogSection = () => {
         </div>
 
         {/* Blog Posts */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+
           {Array(3)
             .fill(null)
             .map((_, index) => (
               <div key={index} className="flex flex-col items-start w-full max-w-[380px] mx-auto">
                 <div className="relative w-full max-w-[350px] h-[450px] sm:h-[521.19px] border border-[#11204D]/[0.15] rounded-[10px]">
                   {/* Blog Image */}
-                  <div className="absolute top-[-30px] left-[10px] right-[10px] h-[250px] sm:h-[328.4px]">
+                  <div className="absolute top-[-30px] left-[10px] right-[10px] h-[250px]">
                     <Image
                       src={`/blogpost-img1.jpg.png`}
                       alt={`Blog Post ${index + 1}`}
