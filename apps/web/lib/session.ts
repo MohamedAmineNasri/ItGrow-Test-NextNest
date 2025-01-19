@@ -73,5 +73,5 @@ export async function updateTokens({
     accessToken,
     refreshToken,
   };
-  await createSession(newPayload)
+  await createSession(newPayload);
 }
