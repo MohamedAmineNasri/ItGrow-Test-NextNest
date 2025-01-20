@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { deleteSession, getSession } from "@/lib/session"; 
-import { Button } from "./button"; 
+import { deleteSession, getSession } from "@/lib/session";
+import { Button } from "./button";
 import Link from "next/link";
 
 const UserDropdown = () => {
-  const [session, setSession] = useState(null); 
+  const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -21,7 +21,7 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     await deleteSession();
-    setSession(null); 
+    setSession(null);
   };
 
   if (loading) {
@@ -32,7 +32,7 @@ const UserDropdown = () => {
     );
   }
   return (
-    <div className="h-screen bg-gray-200 flex justify-center items-center dark:bg-gray-500">
+    <div className=" bg-gray-200 flex justify-center items-center dark:bg-gray-500">
       {!session || !session.user ? (
         // Render Sign-in Button if no session exists
         <div className="sm:flex hidden">
@@ -61,7 +61,7 @@ const UserDropdown = () => {
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 dark:border-white border-gray-900">
                 <img
                   src={
-                    session.user.image || "https://via.placeholder.com/150" // Placeholder if no user image
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
                   }
                   alt="User"
                   className="w-full h-full object-cover"

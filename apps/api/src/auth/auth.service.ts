@@ -16,13 +16,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     @Inject(refreshConfig.KEY)
     private refreshTokenConfig: ConfigType<typeof refreshConfig>,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
   ) {}
 
   async registerUser(createUserDto: CreateUserDto) {
@@ -41,7 +40,10 @@ export class AuthService {
   }
 
   async login(userId: number, name?: string) {
-    const { accessToken, refreshToken } = await this.generateTokens(userId, name);
+    const { accessToken, refreshToken } = await this.generateTokens(
+      userId,
+      name,
+    );
     return {
       id: userId,
       name: name,
@@ -56,10 +58,9 @@ export class AuthService {
       this.jwtService.signAsync(payload),
       this.jwtService.signAsync(payload, this.refreshTokenConfig),
     ]);
-  
+
     return { accessToken, refreshToken };
   }
-  
 
   async validateJwtUser(userId: number) {
     const user = await this.userService.findOne(userId);
@@ -76,7 +77,10 @@ export class AuthService {
   }
 
   async refreshToken(userId: number, name: string) {
-    const { accessToken, refreshToken } = await this.generateTokens(userId, name);
+    const { accessToken, refreshToken } = await this.generateTokens(
+      userId,
+      name,
+    );
     return {
       id: userId,
       name: name,
@@ -92,28 +96,46 @@ export class AuthService {
   }
   async createPost(createPostDto: CreatePostDto) {
     const { title, catSlug, desc, img, userEmail } = createPostDto;
-  
+
     // Generate the slug
     const slug = title
       .toLowerCase()
       .replace(/ /g, '-')
       .replace(/[^\w-]+/g, ''); // Generate slug safely
-  
+
     const post = await this.prisma.post.create({
       data: {
         title,
         desc,
         catSlug,
         userEmail,
-        img,  // Store image name in the database
+        img, // Store image name in the database
         slug, // Add the generated slug here
         views: 0,
       },
     });
-  
+
     return post;
   }
-  
-  
-  
+
+  async getAllPosts() {
+    const posts = await this.prisma.post.findMany({
+      orderBy: {
+        createdAt: 'desc', // Retrieve posts in descending order of creation
+      },
+      select: {
+        id: true,
+        title: true,
+        desc: true,
+        catSlug: true,
+        userEmail: true,
+        img: true,
+        slug: true,
+        views: true,
+        createdAt: true, // Include timestamp of creation
+      },
+    });
+
+    return posts;
+  }
 }

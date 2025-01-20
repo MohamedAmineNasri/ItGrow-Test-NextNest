@@ -117,4 +117,10 @@ export class AuthController {
 
     return { message: 'Post created successfully', post };
   }
+
+  @Get('get-all-posts')
+  async getAllPosts() {
+    const posts = await this.authService.getAllPosts();
+    return { message: 'Posts retrieved successfully', posts };
+  }
 }

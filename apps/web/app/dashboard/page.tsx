@@ -29,11 +29,13 @@ const Page = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('aaaaa', session.user.name)
+  console.log("aaaaa", session.user.name);
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <BlogForm session={session} /> {/* Pass the session to BlogForm */}
+      <main className="flex-grow flex justify-center items-center px-4 sm:px-8">
+        <BlogForm session={session} />
+      </main>
       <PagesFooter />
     </div>
   );
