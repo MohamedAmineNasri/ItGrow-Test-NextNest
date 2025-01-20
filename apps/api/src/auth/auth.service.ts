@@ -11,14 +11,18 @@ import { AuthJwtPayload } from './types/auth.jwtPayload';
 import { JwtService } from '@nestjs/jwt';
 import refreshConfig from './config/refresh.config';
 import { ConfigType } from '@nestjs/config';
+import { CreatePostDto } from 'src/user/dto/create-post.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
+  
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     @Inject(refreshConfig.KEY)
     private refreshTokenConfig: ConfigType<typeof refreshConfig>,
+    private readonly prisma: PrismaService
   ) {}
 
   async registerUser(createUserDto: CreateUserDto) {
@@ -37,7 +41,7 @@ export class AuthService {
   }
 
   async login(userId: number, name?: string) {
-    const { accessToken, refreshToken } = await this.generateTokens(userId);
+    const { accessToken, refreshToken } = await this.generateTokens(userId, name);
     return {
       id: userId,
       name: name,
@@ -46,15 +50,16 @@ export class AuthService {
     };
   }
 
-  async generateTokens(userId: number) {
-    const payload: AuthJwtPayload = { sub: userId };
+  async generateTokens(userId: number, name: string) {
+    const payload: AuthJwtPayload = { sub: userId, name }; // Include name here
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
       this.jwtService.signAsync(payload, this.refreshTokenConfig),
     ]);
-
+  
     return { accessToken, refreshToken };
   }
+  
 
   async validateJwtUser(userId: number) {
     const user = await this.userService.findOne(userId);
@@ -71,7 +76,7 @@ export class AuthService {
   }
 
   async refreshToken(userId: number, name: string) {
-    const { accessToken, refreshToken } = await this.generateTokens(userId);
+    const { accessToken, refreshToken } = await this.generateTokens(userId, name);
     return {
       id: userId,
       name: name,
@@ -85,4 +90,30 @@ export class AuthService {
     if (user) return user;
     return await this.userService.create(googleUser);
   }
+  async createPost(createPostDto: CreatePostDto) {
+    const { title, catSlug, desc, img, userEmail } = createPostDto;
+  
+    // Generate the slug
+    const slug = title
+      .toLowerCase()
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, ''); // Generate slug safely
+  
+    const post = await this.prisma.post.create({
+      data: {
+        title,
+        desc,
+        catSlug,
+        userEmail,
+        img,  // Store image name in the database
+        slug, // Add the generated slug here
+        views: 0,
+      },
+    });
+  
+    return post;
+  }
+  
+  
+  
 }

@@ -28,8 +28,6 @@ model Post {
   catSlug   String
   userEmail String
   comments  Comment[]
-  cat       Category  @relation(fields: [catSlug], references: [slug])
-  user      User      @relation(fields: [userEmail], references: [email])
 }
 
 model User {
@@ -40,7 +38,6 @@ model User {
   hashedRefreshToken String?
   role               Role      @default(USER)
   comments           Comment[]
-  posts              Post[]
 }
 
 model Category {
@@ -48,7 +45,6 @@ model Category {
   slug  String  @unique
   title String
   img   String?
-  Posts Post[]
 }
 
 enum Role {

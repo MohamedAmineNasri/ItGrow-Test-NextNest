@@ -6,6 +6,8 @@ import {
   Request,
   Get,
   Res,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -14,6 +16,11 @@ import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 import { RefreshAuthGuard } from './guards/refresh-auth/refresh-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
 import { Response } from 'express';
+import { CreatePostDto } from 'src/user/dto/create-post.dto';
+import { diskStorage } from 'multer';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Controller('auth')
 export class AuthController {
@@ -34,7 +41,7 @@ export class AuthController {
   @Get('protected')
   getAll(@Request() req) {
     return {
-      message: `Now you can access this protected API, this is your user ID: ${req.user.id}`,
+      message: `Welcome, ${req.user.name}. This is your user ID: ${req.user.id}`,
     };
   }
 
@@ -54,8 +61,60 @@ export class AuthController {
     console.log('Google User', req.user);
     const response = await this.authService.login(req.user.id, req.user.name);
     res.redirect(
-      `http://localhost:3000/auth/google/callback?userId=${response.id}&name=${response.name}&accessToken=${response.accessToken}&refreshToken=${response.refreshToken}`
+      `http://localhost:3000/auth/google/callback?userId=${response.id}&name=${response.name}&accessToken=${response.accessToken}&refreshToken=${response.refreshToken}`,
     );
   }
-  
+  @Post('create-post')
+  @UseInterceptors(
+    FileInterceptor('img', {
+      limits: { fileSize: 50 * 1024 * 1024 }, // Set file size limit (50MB)
+      storage: diskStorage({
+        destination: (req, file, cb) => {
+          const uploadPath = path.join(
+            __dirname,
+            '..',
+            '..',
+            '..',
+            'web',
+            'public',
+          );
+          if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        },
+        filename: (req, file, cb) => {
+          const filename = `${Date.now()}-${file.originalname}`;
+          cb(null, filename);
+        },
+      }),
+    }),
+  )
+  async createPost(
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const { title, catSlug, desc, userEmail } = createPostDto;
+
+    if (!title || !catSlug || !desc || !userEmail) {
+      throw new Error('Missing required fields.');
+    }
+
+    if (!file) {
+      throw new Error('Missing file upload.');
+    }
+
+    const imageName = file ? file.filename : null;
+    console.log('Uploaded image filename:', imageName);
+
+    const post = await this.authService.createPost({
+      title,
+      catSlug,
+      desc,
+      userEmail,
+      img: imageName, // Ensure image name is stored in DB
+    });
+
+    return { message: 'Post created successfully', post };
+  }
 }

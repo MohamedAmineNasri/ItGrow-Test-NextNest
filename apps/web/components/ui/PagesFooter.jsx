@@ -2,8 +2,8 @@ import React from "react";
 
 const PagesFooter = () => {
   return (
-    <footer className="flex flex-col justify-center items-center py-[50px] px-[260px] w-full bg-[#11204D] text-white">
-      <div className="flex flex-col items-start w-full max-w-[1140px]">
+    <footer className="w-full bg-[#11204D] text-white py-5">
+      <div className="flex flex-col items-center justify-center w-full max-w-[1140px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
           <p className="text-[17px] leading-[31px] font-normal font-jost">
             Copyright © Modak 2020. All rights reserved.
