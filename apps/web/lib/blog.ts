@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { BACKEND_URL } from "./constants";
 
 export async function createPost(formData: FormData, session) {
@@ -9,7 +8,6 @@ export async function createPost(formData: FormData, session) {
   const desc = formData.get("desc");
   const img = formData.get("img");
 
-  // Validate required fields
   if (!title || !catSlug || !desc) {
     return { message: "Title, Category, and Description are required." };
   }
@@ -17,15 +15,12 @@ export async function createPost(formData: FormData, session) {
     return { message: " img is  required." };
   }
 
-  // Prepare the data for submission
   const requestData = new FormData();
   requestData.append("title", title);
   requestData.append("catSlug", catSlug);
   requestData.append("desc", desc);
-  if (img) requestData.append("img", img); // Attach the image file directly
-
+  if (img) requestData.append("img", img); 
   try {
-    // Make the POST request
     const response = await fetch(`${BACKEND_URL}/auth/create-post`, {
       method: "POST",
       headers: {
@@ -35,9 +30,8 @@ export async function createPost(formData: FormData, session) {
     });
 
     if (response.ok) {
-      // Get the Next.js router
-      // redirect("/"); // Redirect client-side to the homepage
-      return { message: "Post created successfully." }; // Optional
+
+      return { message: "Post created successfully." }; 
     } else {
       const errorData = await response.json();
       return {

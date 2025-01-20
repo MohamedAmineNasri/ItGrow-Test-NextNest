@@ -13,6 +13,8 @@ import refreshConfig from './config/refresh.config';
 import { ConfigType } from '@nestjs/config';
 import { CreatePostDto } from 'src/user/dto/create-post.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -53,7 +55,7 @@ export class AuthService {
   }
 
   async generateTokens(userId: number, name: string) {
-    const payload: AuthJwtPayload = { sub: userId, name }; // Include name here
+    const payload: AuthJwtPayload = { sub: userId, name }; 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
       this.jwtService.signAsync(payload, this.refreshTokenConfig),
@@ -132,7 +134,7 @@ export class AuthService {
         img: true,
         slug: true,
         views: true,
-        createdAt: true, // Include timestamp of creation
+        createdAt: true, 
       },
     });
 
@@ -141,11 +143,10 @@ export class AuthService {
 
 
 
-   // Create work entry with uploaded images
+   
    async createWork(createWorkDto: { userEmail: string; images: string[] }) {
     const { userEmail, images } = createWorkDto;
 
-    // Add entry to the 'Work' table
     const work = await this.prisma.work.create({
       data: {
         images,
@@ -155,7 +156,6 @@ export class AuthService {
     return work;
   }
 
-  // Retrieve all uploaded work images
   async getWorkImages() {
     const workImages = await this.prisma.work.findMany({
       select: {
@@ -163,7 +163,18 @@ export class AuthService {
         images: true,
       },
     });
-
-    return workImages;
+  
+    // Map image filenames to their relative paths in 'public/Work'
+    const workImagesWithPaths = workImages.map(workImage => ({
+      ...workImage,
+      images: workImage.images.map(image => {
+        // Return the relative URL of the image
+        return `/Work/${image}`;  // Static files served from the 'public/Work' folder in Next.js
+      }).filter(Boolean), // Remove null values if any images are missing
+    }));
+  
+    return workImagesWithPaths;
   }
+  
+
 }

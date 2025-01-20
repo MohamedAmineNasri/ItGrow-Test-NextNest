@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { authFetch } from "./authFetch";
 import { BACKEND_URL } from "./constants";
 
 export async function createWork(formData: FormData, session) {
@@ -11,13 +11,12 @@ export async function createWork(formData: FormData, session) {
     }
   
     try {
-      // Make the POST request
       const response = await fetch(`${BACKEND_URL}/auth/upload-work-images`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
         },
-        body: formData,  // Use formData, which already contains the image
+        body: formData,  
       });
   
       if (response.ok) {
@@ -33,4 +32,19 @@ export async function createWork(formData: FormData, session) {
       return { message: "An error occurred while creating the Work." };
     }
   }
+  
+
+  export const getWorkImages = async () => {
+    try {
+      const response = await authFetch(`${BACKEND_URL}/auth/get-work-images`);
+      const result = await response.json();
+  
+      // Ensure that 'workImages' is an array before returning it
+      return Array.isArray(result.workImages) ? result.workImages : [];
+    } catch (error) {
+      console.error('Error fetching work images:', error);
+      return []; // Return an empty array in case of error
+    }
+  };
+  
   

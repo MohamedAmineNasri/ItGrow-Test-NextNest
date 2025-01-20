@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel styles
 
 const IntroductionSection = () => {
   return (
@@ -30,15 +34,54 @@ const IntroductionSection = () => {
             </h3>
           </div>
 
-          {/* Image Section */}
-          <div className="relative hidden lg:block max-w-[514px] w-full h-[338.21px] overflow-hidden">
-            <Image
-              src="/photography_img5.jpg.png"
-              alt="Photography Example"
-              width={290}
-              height={338}
-              className="rounded-[10px] absolute left-[320px] top-0"
-            />
+          {/* Image Slider Section */}
+          <div className="relative hidden lg:block w-[290px] h-[338px] overflow-hidden">
+            <Carousel
+              autoPlay
+              infiniteLoop
+              showThumbs={false}
+              showStatus={false}
+              showIndicators={true}
+              interval={3000}
+              className="rounded-[10px] w-full h-full"
+            >
+              <div className="w-full h-full">
+                <Image
+                  src="/sliderImage4.png"
+                  alt="Photography Example 3"
+                  width={290}
+                  height={338}
+                  className="rounded-[10px] object-cover"
+                />
+              </div>
+              <div className="w-full h-full">
+                <Image
+                  src="/photography_img5.jpg.png"
+                  alt="Photography Example 1"
+                  width={290}
+                  height={338}
+                  className="rounded-[10px] object-cover"
+                />
+              </div>
+              <div className="w-full h-full">
+                <Image
+                  src="/sliderImage2.png"
+                  alt="Photography Example 2"
+                  width={290}
+                  height={338}
+                  className="rounded-[10px] object-cover"
+                />
+              </div>
+              <div className="w-full h-full">
+                <Image
+                  src="/sliderImage3.png"
+                  alt="Photography Example 3"
+                  width={290}
+                  height={338}
+                  className="rounded-[10px] object-cover"
+                />
+              </div>
+            </Carousel>
           </div>
         </div>
 
@@ -53,17 +96,13 @@ const IntroductionSection = () => {
         {/* Social Links Section */}
         <div className="flex flex-col lg:flex-row items-center gap-[20px] lg:gap-[6px] w-full h-auto lg:h-[56.6px]">
           <div className="flex flex-row items-center gap-[20px]">
-            {/* "Follow Me on" Text */}
             <p className="text-[15px] lg:text-[17px] font-jost font-medium text-[#11204D] leading-[25px] lg:leading-[31px] tracking-[0.2px]">
               Follow Me on
             </p>
-
-            {/* Horizontal Divider */}
             <div className="relative w-[60px] lg:w-[80px] h-[2px] bg-[#11204D]/[0.15] mt-[0.25px]"></div>
           </div>
 
           <div className="flex flex-row gap-[15.8px]">
-            {/* Instagram Icon */}
             <div className="flex items-center justify-center w-[40px] lg:w-[55.8px] h-[40px] lg:h-[56.6px] bg-white border border-[#11204D]/[0.15] rounded-[10px]">
               <Image
                 src="/insta.png"
@@ -72,8 +111,6 @@ const IntroductionSection = () => {
                 height={24.2}
               />
             </div>
-
-            {/* Facebook Icon */}
             <div className="flex items-center justify-center w-[40px] lg:w-[55.8px] h-[40px] lg:h-[56.6px] bg-white border border-[#11204D]/[0.15] rounded-[10px]">
               <Image
                 src="/facebook.png"
@@ -82,8 +119,6 @@ const IntroductionSection = () => {
                 height={24.2}
               />
             </div>
-
-            {/* LinkedIn Icon */}
             <div className="flex items-center justify-center w-[40px] lg:w-[55.8px] h-[40px] lg:h-[56.6px] bg-white border border-[#11204D]/[0.15] rounded-[10px]">
               <Image
                 src="/linkedin.png"

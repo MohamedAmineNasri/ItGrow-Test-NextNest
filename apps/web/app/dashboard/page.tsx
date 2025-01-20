@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getSession } from "@/lib/session"; // Assuming you have this utility function for fetching the session
+import { getSession } from "@/lib/session"; 
 import Header from "@/components/ui/Header";
 import BlogForm from "./BlogForm";
 import PagesFooter from "@/components/ui/PagesFooter";
