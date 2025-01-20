@@ -6,6 +6,7 @@ import { getSession } from "@/lib/session"; // Assuming you have this utility fu
 import Header from "@/components/ui/Header";
 import BlogForm from "./BlogForm";
 import PagesFooter from "@/components/ui/PagesFooter";
+import WorkForm from "./WorkForm";
 
 const Page = () => {
   const [session, setSession] = useState(null);
@@ -36,6 +37,7 @@ const Page = () => {
       <main className="flex-grow flex justify-center items-center px-4 sm:px-8">
         <BlogForm session={session} />
       </main>
+        <WorkForm session={session}/>
       <PagesFooter />
     </div>
   );

@@ -131,7 +131,7 @@ const BlogForm = ({ session }) => {
             type="file"
             id="img"
             name="img"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => {console.log(e),setImage(e.target.files[0])}}
             className="hidden"
           />
         </label>

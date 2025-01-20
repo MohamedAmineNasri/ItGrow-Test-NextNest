@@ -123,4 +123,39 @@ export class AuthController {
     const posts = await this.authService.getAllPosts();
     return { message: 'Posts retrieved successfully', posts };
   }
+
+  @Post('upload-work-images')
+  @UseInterceptors(
+    FileInterceptor('imgs', {
+      limits: { fileSize: 50 * 1024 * 1024 }, // 50MB file size limit
+      storage: diskStorage({
+        destination: (req, file, cb) => {
+          const uploadPath = path.join(__dirname, '..', '..', '..', 'web', 'public', 'Work');
+          if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        },
+        filename: (req, file, cb) => {
+          const filename = `${Date.now()}-${file.originalname}`;
+          cb(null, filename);
+        },
+      }),
+    }),
+  )
+  async uploadImages(@Body() createWorkDto: { userEmail: string }, @UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new Error("No image uploaded.");
+    }
+  
+    const imageName = file.filename;
+  
+    const work = await this.authService.createWork({
+      userEmail: createWorkDto.userEmail,
+      images: [imageName], // Save the uploaded image file name to the database
+    });
+  
+    return { message: 'Image uploaded successfully', work };
+  }
+  
 }

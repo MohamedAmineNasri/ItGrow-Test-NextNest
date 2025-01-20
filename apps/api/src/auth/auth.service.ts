@@ -138,4 +138,32 @@ export class AuthService {
 
     return posts;
   }
+
+
+
+   // Create work entry with uploaded images
+   async createWork(createWorkDto: { userEmail: string; images: string[] }) {
+    const { userEmail, images } = createWorkDto;
+
+    // Add entry to the 'Work' table
+    const work = await this.prisma.work.create({
+      data: {
+        images,
+      },
+    });
+
+    return work;
+  }
+
+  // Retrieve all uploaded work images
+  async getWorkImages() {
+    const workImages = await this.prisma.work.findMany({
+      select: {
+        id: true,
+        images: true,
+      },
+    });
+
+    return workImages;
+  }
 }

@@ -13,7 +13,7 @@ export async function createPost(formData: FormData, session) {
   if (!title || !catSlug || !desc) {
     return { message: "Title, Category, and Description are required." };
   }
-  if(!img ){
+  if (!img) {
     return { message: " img is  required." };
   }
 
@@ -35,8 +35,8 @@ export async function createPost(formData: FormData, session) {
     });
 
     if (response.ok) {
-       // Get the Next.js router
-       redirect('/') // Redirect client-side to the homepage
+      // Get the Next.js router
+      // redirect("/"); // Redirect client-side to the homepage
       return { message: "Post created successfully." }; // Optional
     } else {
       const errorData = await response.json();

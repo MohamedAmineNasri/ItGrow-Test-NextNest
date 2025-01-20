@@ -30,6 +30,10 @@ model Post {
   comments  Comment[]
 }
 
+model Work {
+  id      Int      @id @default(autoincrement())
+  images  String[] 
+}
 
 
 model User {
