@@ -5,7 +5,8 @@ const Testimonial = () => {
   return (
     <div className="flex flex-col justify-center items-center px-6 py-16 w-full bg-[#F7F8FA]">
       <div className="flex flex-col items-center gap-10 w-full max-w-6xl">
-        <div className="flex flex-col items-center gap-2 w-full">
+        <div className="relative flex flex-col items-center gap-2 w-full">
+        <div className="absolute w-[60px] h-[60px] left-[541px] top-[-9px] bg-[rgba(51,231,175,0.1)] rounded-[30px] z-0"></div>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-playfair text-[#11204D] text-center">
             Testimonial
           </h2>

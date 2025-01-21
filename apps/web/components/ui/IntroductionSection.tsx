@@ -3,15 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel styles
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
 const IntroductionSection = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full py-[260px] h-auto lg:h-[596.81px]">
       <div className="flex flex-col items-center lg:items-start gap-[30px] w-full max-w-[1153px] h-auto lg:h-[496.81px]">
-        {/* Main Content Section */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-[30px] w-full h-auto lg:h-[338.21px]">
-          {/* Text Section */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-[10px] px-[15px] w-full lg:max-w-[570px] h-auto lg:h-full">
             <div className="flex flex-col items-center lg:items-start">
               <h1 className="text-[48px] lg:text-[68px] font-jost font-light text-[#11204D] leading-[48px] lg:leading-[68px] tracking-[0.2px]">
@@ -34,8 +32,7 @@ const IntroductionSection = () => {
             </h3>
           </div>
 
-          {/* Image Slider Section */}
-          <div className="relative hidden lg:block w-[290px] h-[338px] overflow-hidden">
+          <div className="relative hidden lg:block w-[290px] h-[338px] overflow-hidden ml-auto">
             <Carousel
               autoPlay
               infiniteLoop
@@ -85,7 +82,6 @@ const IntroductionSection = () => {
           </div>
         </div>
 
-        {/* Description Section */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-[1012px] h-auto lg:h-[128.6px]">
           <p className="text-[18px] lg:text-[24px] font-jost font-normal text-[#11204D]/[0.7] leading-[28px] lg:leading-[36px] tracking-[0.2px]">
             I help our clients create brands, build digital products and
@@ -93,7 +89,6 @@ const IntroductionSection = () => {
           </p>
         </div>
 
-        {/* Social Links Section */}
         <div className="flex flex-col lg:flex-row items-center gap-[20px] lg:gap-[6px] w-full h-auto lg:h-[56.6px]">
           <div className="flex flex-row items-center gap-[20px]">
             <p className="text-[15px] lg:text-[17px] font-jost font-medium text-[#11204D] leading-[25px] lg:leading-[31px] tracking-[0.2px]">

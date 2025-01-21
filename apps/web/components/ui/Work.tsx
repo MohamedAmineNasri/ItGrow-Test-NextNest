@@ -9,12 +9,11 @@ const Work = async () => {
     return <p>No images available at the moment.</p>;
   }
 
-  console.log(photos); // Check the structure of the photos
-
   return (
-    <div className="flex flex-col items-center h-full px-4 sm:px-8 md:px-16">
+    <div className="flex flex-col items-center h-full px-4 sm:px-8 md:px-16 py-20">
       <div className="flex flex-col items-center p-0 gap-[40px] w-full max-w-[1140px]">
-        <div className="flex flex-col items-center p-0 gap-2 w-full">
+      <div className="relative flex flex-col items-center p-0 gap-2 w-full">
+        <div className="absolute w-[60px] h-[60px] left-[474px] top-[-9px] bg-[rgba(51,231,175,0.1)] rounded-[30px] z-0"></div>
           <h2 className="font-playfair font-bold text-[24px] sm:text-[28px] md:text-[36px] leading-[1.2] text-[#11204D] text-center">
             My Work
           </h2>
@@ -23,16 +22,21 @@ const Work = async () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {photos.map((photo, index) => (
-            <Image
-              key={index} // Added unique key
-              src={photo.images[0]} // Using the first image from the 'images' array
-              alt={`Work image ${index}`}
-              width={255}
-              height={297.5}
-              className="rounded-[10px]"
-            />
+            <div className="grid gap-4" key={index}>
+              {photo.images.map((image, imgIndex) => (
+                <div key={imgIndex}>
+                  <Image
+                    src={image}
+                    alt={`Work image ${index}-${imgIndex}`}
+                    width={255}
+                    height={297.5}
+                    className="h-auto max-w-full rounded-lg "
+                  />
+                </div>
+              ))}
+            </div>
           ))}
         </div>
       </div>
