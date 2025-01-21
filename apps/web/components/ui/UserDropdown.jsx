@@ -31,8 +31,9 @@ const UserDropdown = () => {
       </div>
     );
   }
+
   return (
-    <div className=" bg-gray-200 flex justify-center items-center dark:bg-gray-500">
+    <div className="bg-gray-200 flex justify-center items-center dark:bg-gray-500">
       {!session || !session.user ? (
         // Render Sign-in Button if no session exists
         <div className="sm:flex hidden">
@@ -53,16 +54,12 @@ const UserDropdown = () => {
         <div className="bg-white dark:bg-gray-800 w-64 shadow flex justify-center items-center">
           <div
             onClick={() => setOpen(!open)}
-            className={`relative border-b-4 border-transparent py-3 ${
-              open ? "border-indigo-700 transform transition duration-300" : ""
-            }`}
+            className={`relative border-b-4 border-transparent py-3 ${open ? "border-indigo-700 transform transition duration-300" : ""}`}
           >
             <div className="flex justify-center items-center space-x-3 cursor-pointer">
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 dark:border-white border-gray-900">
                 <img
-                  src={
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
-                  }
+                  src={"https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"}
                   alt="User"
                   className="w-full h-full object-cover"
                 />
@@ -74,9 +71,9 @@ const UserDropdown = () => {
 
             {/* Dropdown Menu */}
             {open && (
-              <div className="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5 transition-transform duration-200">
+              <div className="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5 transition-transform duration-200 z-20">
                 <ul className="space-y-3 dark:text-white">
-                  <li className="font-medium">
+                  {/* <li className="font-medium">
                     <a
                       href="#"
                       className="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700"
@@ -99,7 +96,7 @@ const UserDropdown = () => {
                       </div>
                       Account
                     </a>
-                  </li>
+                  </li> */}
                   <li className="font-medium">
                     <Link
                       href="/dashboard"

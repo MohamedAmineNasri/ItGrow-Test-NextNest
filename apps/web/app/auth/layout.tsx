@@ -4,9 +4,11 @@ import React, { PropsWithChildren } from "react";
 
 const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div >
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="h-[623px]">{children}</div>
+      <div className="flex-grow flex items-center justify-center">
+        {children}
+      </div>
       <PagesFooter />
     </div>
   );
